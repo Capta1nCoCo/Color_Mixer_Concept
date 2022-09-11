@@ -19,26 +19,25 @@ public class Wobble : MonoBehaviour
     private Vector3 lastRot;
     private Vector3 angularVelocity;
 
+    private bool isWobbleble;
+
     private void Awake()
     {
         rend = GetComponent<Renderer>();
     }
 
     private void Update()
-    {
-        time += Time.deltaTime;
-
-        DecreaseWobbleOverTime();
-
-        MakeASinWaveOfTheDecreasingWobble();
-
-        SendWobbleAmountToTheShader();
-
-        AdjustVelocity();
-
-        AddClampedVelocityToWobble();
-
-        KeepLastPosition();
+    {        
+        if (isWobbleble)
+        {
+            time += Time.deltaTime;
+            DecreaseWobbleOverTime();
+            MakeASinWaveOfTheDecreasingWobble();
+            SendWobbleAmountToTheShader();
+            AdjustVelocity();
+            AddClampedVelocityToWobble();
+            KeepLastPosition();
+        }        
     }
     
     private void DecreaseWobbleOverTime()
