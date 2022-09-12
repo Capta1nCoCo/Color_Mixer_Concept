@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class Fruit : MonoBehaviour
 {
-    [SerializeField] private FruitType fruitVariety;
-    public FruitType GetFruitVariety { get { return fruitVariety; } }
+    [SerializeField] private FruitType fruitType;
+    public FruitType GetFruitType { get { return fruitType; } }
 }

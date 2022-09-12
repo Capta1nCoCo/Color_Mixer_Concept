@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 194db706d4df4b74fa5b9541161ad39a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fruitVariety: 1
+  fruitType: 1
 --- !u!1001 &7034639805174710669
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,5 +1,10 @@
 public enum FruitType
 {
     Apple,
-    Banana
+    Banana,
+    Orange,
+    Cherry,
+    Tomato,
+    Broccoli,
+    Eggplant
 }

@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 33872579904509522}
   - component: {fileID: 23951655326940150}
   - component: {fileID: 4696797512852982404}
+  - component: {fileID: 6977152456957647746}
   m_Layer: 5
   m_Name: BlenderUI
   m_TagString: Untagged
@@ -185,6 +186,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   juiceInTheJug: {fileID: 2734126589386076268}
   juiceMaterial: {fileID: 2100000, guid: 4bdef9655adb9ce48924bbc461d4c49e, type: 2}
+--- !u!114 &6977152456957647746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707807610190462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9e3146dc713d7443a64c11a41ad8a73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  juiceMaterial: {fileID: 2100000, guid: 4bdef9655adb9ce48924bbc461d4c49e, type: 2}
+  referenceColors:
+  - {r: 0.74509805, g: 1, b: 0.34117648, a: 1}
+  - {r: 0.9490196, g: 0.7176471, b: 0.019607844, a: 1}
+  - {r: 0.43529412, g: 0.078431375, b: 0, a: 1}
+  fruitColors:
+  - {r: 0.61960787, g: 0.7490196, b: 0.3372549, a: 1}
+  - {r: 1, g: 0.8627451, b: 0, a: 1}
+  - {r: 0.9490196, g: 0.36078432, b: 0.019607844, a: 1}
+  - {r: 0.69803923, g: 0.18431373, b: 0, a: 1}
+  - {r: 0.9490196, g: 0.1882353, b: 0.019607844, a: 1}
+  - {r: 0.5019608, g: 0.6509804, b: 0.1764706, a: 1}
+  - {r: 0.5529412, g: 0.36862746, b: 0.9490196, a: 1}
 --- !u!1 &1949344047188952
 GameObject:
   m_ObjectHideFlags: 0
