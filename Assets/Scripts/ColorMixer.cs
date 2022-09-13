@@ -21,17 +21,23 @@ public class ColorMixer : MonoBehaviour
     private float currentG;
     private float currentB;
 
+    private bool isSingleTypeFruits;
+
+    private Color singleTypeFruitsColor = Color.white;
+
     private List<Enum> fruitTypesToMix = new List<Enum>();
+    private List<Enum> singleTypeFruits = new List<Enum>();
 
     private void Awake()
-    {        
+    {
+        isSingleTypeFruits = true;
         GameEvents.MixColors += OnMixColors;
     }   
 
     private void Start()
     {
         //TEST AREA
-        //TODO: currentLevelIndex and dividers should be passed each level
+        //TODO: currentLevelIndex and dividersRGB will be passed each level by GameController
         dividerR = 2;
         dividerG = 3;
         AdjustJuiceColor();
@@ -50,17 +56,70 @@ public class ColorMixer : MonoBehaviour
     private void OnMixColors()
     {
         MixFruitsColors();
-        AdjustJuiceColor();
+        
+        if (isSingleTypeFruits)
+        {
+            ApplyColorToJuiceMaterial(singleTypeFruitsColor);
+        }
+        else
+        {
+            AdjustJuiceColor();
+        }        
     }
 
     private void MixFruitsColors()
     {
         foreach (FruitType fruit in fruitTypesToMix)
         {
-            AddFruitAsColor(fruit);
-            print(fruit);
+            if (isSingleTypeFruits)
+            {
+                if (singleTypeFruits.Count == 0)
+                {
+                    singleTypeFruits.Add(fruit);
+                    singleTypeFruitsColor = GetFruitColor(fruit);
+                }
+                else if (!singleTypeFruits.Contains(fruit))
+                {
+                    AddSingleTypeFruitsAsColors();
+                    AddFruitAsColor(fruit);                    
+                }
+                else
+                {
+                    singleTypeFruits.Add(fruit);
+                }
+            }
+            else
+            {
+                AddFruitAsColor(fruit);
+            }            
         }
         fruitTypesToMix.Clear();
+    }
+
+    private Color GetFruitColor(FruitType fruit)
+    {
+        switch (fruit)
+        {
+            case FruitType.Apple: return fruitColors[0];
+            case FruitType.Banana: return fruitColors[1];
+            case FruitType.Orange: return fruitColors[2];
+            case FruitType.Cherry: return fruitColors[3];
+            case FruitType.Tomato: return fruitColors[4];
+            case FruitType.Broccoli: return fruitColors[5];
+            case FruitType.Eggplant: return fruitColors[6];
+            default: return fruitColors[0];
+        }
+    }
+
+    private void AddSingleTypeFruitsAsColors()
+    {
+        isSingleTypeFruits = false;
+
+        foreach (FruitType fruit in singleTypeFruits)
+        {
+            AddFruitAsColor(fruit);
+        }
+        singleTypeFruits.Clear();
     }
 
     private void AddFruitAsColor(FruitType fruit)

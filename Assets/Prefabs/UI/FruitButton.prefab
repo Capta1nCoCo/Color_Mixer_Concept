@@ -272,3 +272,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fruitPrefab: {fileID: 0}
   dropPoint: {fileID: 0}
+  poolSize: 5
