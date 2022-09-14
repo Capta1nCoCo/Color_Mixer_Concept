@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class Blender : MonoBehaviour
 {
-    public static Blender Instance;
-
     [SerializeField] private GameObject juiceInTheJug;
     [SerializeField] private Material juiceMaterial;
 
     private const string Fill = "_Fill";
-    private const float fillAmountPerFruit = 0.2f;
+    private const float fillAmountPerFruit = 0.15f;
 
     private float currentFillAmount;
 
     private void Awake()
     {
-        Instance = this;
         juiceInTheJug.SetActive(true);
         FillTheJugWithJuice();
     }
@@ -24,7 +21,6 @@ public class Blender : MonoBehaviour
     public void Mix()
     {        
         print("Mixing Fruits...");
-        
         GameEvents.JugIsEmpty();
         GameEvents.MixColors();
     }

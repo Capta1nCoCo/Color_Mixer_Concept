@@ -63,6 +63,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fruitType: 2
+  colorChannel: 0
+  fruitColor: {r: 0.9490196, g: 0.36078432, b: 0.019607844, a: 1}
 --- !u!1001 &1589364321723620482
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,7 +7,6 @@ public class ColorMixer : MonoBehaviour
 {
     [SerializeField] private Material juiceMaterial;
     [SerializeField] private Color[] referenceColors;
-    [SerializeField] private Color[] fruitColors;
 
     private const string SideColor = "_SideColor";
     private const string TopColor = "_TopColor";
@@ -25,8 +24,8 @@ public class ColorMixer : MonoBehaviour
 
     private Color singleTypeFruitsColor = Color.white;
 
-    private List<Enum> fruitTypesToMix = new List<Enum>();
-    private List<Enum> singleTypeFruits = new List<Enum>();
+    private List<Fruit> fruitsToMix = new List<Fruit>();
+    private List<Fruit> singleTypeFruits = new List<Fruit>();
 
     private void Awake()
     {
@@ -38,8 +37,10 @@ public class ColorMixer : MonoBehaviour
     {
         //TEST AREA
         //TODO: currentLevelIndex and dividersRGB will be passed each level by GameController
+        currentLevelIndex = 1;
         dividerR = 2;
         dividerG = 3;
+        dividerB = 2;
         AdjustJuiceColor();
     }
 
@@ -48,9 +49,9 @@ public class ColorMixer : MonoBehaviour
         GameEvents.MixColors -= OnMixColors;
     }
 
-    public void AddFruitTypeToMix(FruitType fruitTypeInTheJug)
+    public void AddFruitToMix(Fruit fruitInTheJug)
     {
-        fruitTypesToMix.Add(fruitTypeInTheJug);
+        fruitsToMix.Add(fruitInTheJug);
     }
 
     private void OnMixColors()
@@ -64,21 +65,27 @@ public class ColorMixer : MonoBehaviour
         else
         {
             AdjustJuiceColor();
-        }        
+        }
+        
+        foreach (Fruit fruit in fruitsToMix)
+        {
+            print(fruit.GetFruitType);
+        }
     }
 
     private void MixFruitsColors()
     {
-        foreach (FruitType fruit in fruitTypesToMix)
+        foreach (Fruit fruit in fruitsToMix)
         {
             if (isSingleTypeFruits)
             {
-                if (singleTypeFruits.Count == 0)
+                var firstItemIndex = 0;
+                if (singleTypeFruits.Count == firstItemIndex)
                 {
                     singleTypeFruits.Add(fruit);
-                    singleTypeFruitsColor = GetFruitColor(fruit);
+                    SetSingleTypeFruitsColor(fruit);
                 }
-                else if (!singleTypeFruits.Contains(fruit))
+                else if (fruit.GetFruitType != singleTypeFruits[firstItemIndex].GetFruitType)
                 {
                     AddSingleTypeFruitsAsColors();
                     AddFruitAsColor(fruit);                    
@@ -93,50 +100,47 @@ public class ColorMixer : MonoBehaviour
                 AddFruitAsColor(fruit);
             }            
         }
-        fruitTypesToMix.Clear();
+        fruitsToMix.Clear();
     }
 
-    private Color GetFruitColor(FruitType fruit)
+    private void SetSingleTypeFruitsColor(Fruit fruit)
     {
-        switch (fruit)
-        {
-            case FruitType.Apple: return fruitColors[0];
-            case FruitType.Banana: return fruitColors[1];
-            case FruitType.Orange: return fruitColors[2];
-            case FruitType.Cherry: return fruitColors[3];
-            case FruitType.Tomato: return fruitColors[4];
-            case FruitType.Broccoli: return fruitColors[5];
-            case FruitType.Eggplant: return fruitColors[6];
-            default: return fruitColors[0];
-        }
+        singleTypeFruitsColor = fruit.GetFruitColor;
     }
 
     private void AddSingleTypeFruitsAsColors()
     {
-        isSingleTypeFruits = false;
-
-        foreach (FruitType fruit in singleTypeFruits)
+        foreach (Fruit fruit in singleTypeFruits)
         {
             AddFruitAsColor(fruit);
         }
         singleTypeFruits.Clear();
+        
+        isSingleTypeFruits = false;
     }
 
-    private void AddFruitAsColor(FruitType fruit)
-    {        
-        var fruitPartOfR = referenceColors[currentLevelIndex].r / dividerR;
-        var fruitPartOfG = referenceColors[currentLevelIndex].g / dividerG;
+    private void AddFruitAsColor(Fruit fruit)
+    {
+        var refColor = referenceColors[currentLevelIndex];
+        var fruitPartOfR = refColor.r / dividerR;
+        var fruitPartOfG = refColor.g / dividerG;
+        var fruitPartOfB = refColor.b / dividerB;
 
-        switch (fruit)
+        switch (fruit.GetColorChannel)
         {
-            case FruitType.Banana:
+            case ColorChannel.R:
                 currentR += fruitPartOfR;
-                currentR = Mathf.Clamp(currentR, 0f, referenceColors[currentLevelIndex].r);
+                currentR = Mathf.Clamp(currentR, 0f, refColor.r);
                 break;
 
-            case FruitType.Apple & FruitType.Broccoli:
+            case ColorChannel.G:
                 currentG += fruitPartOfG;
-                currentG = Mathf.Clamp(currentG, 0f, referenceColors[currentLevelIndex].g);
+                currentG = Mathf.Clamp(currentG, 0f, refColor.g);
+                break;
+
+            case ColorChannel.B:
+                currentB += fruitPartOfB;
+                currentB = Mathf.Clamp(currentB, 0f, refColor.b);
                 break;
         }
     }
@@ -146,6 +150,7 @@ public class ColorMixer : MonoBehaviour
         Color temp = referenceColors[currentLevelIndex];
         temp.r = currentR;
         temp.g = currentG;
+        if (dividerB > 0) { temp.b = currentB; }        
         ApplyColorToJuiceMaterial(temp);
     }
 

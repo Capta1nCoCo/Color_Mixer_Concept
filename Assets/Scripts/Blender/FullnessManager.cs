@@ -11,10 +11,12 @@ public class FullnessManager : MonoBehaviour
     private List<GameObject> fruitsInTheJug = new List<GameObject>();
 
     private ColorMixer colorMixer;
+    private Blender blender;
 
     private void Awake()
     {
         colorMixer = GetComponentInParent<ColorMixer>();
+        blender = GetComponentInParent<Blender>();
         GameEvents.JugIsEmpty += OnJugIsEmpty;
     }
 
@@ -42,10 +44,10 @@ public class FullnessManager : MonoBehaviour
         foreach (GameObject fruit in fruitsInTheJug)
         {
             var fruitObj = fruit.GetComponentInParent<Rigidbody>().gameObject;
-            colorMixer.AddFruitTypeToMix(fruitObj.GetComponent<Fruit>().GetFruitType); 
+            colorMixer.AddFruitToMix(fruitObj.GetComponent<Fruit>());
             fruitObj.SetActive(false);           
         }
-        Blender.Instance.AddToFillAmount(fruitsInTheJug.Count);
+        blender.AddToFillAmount(fruitsInTheJug.Count);
         fruitsInTheJug.Clear();
 
         print("Jar is empty!");      
