@@ -7,19 +7,22 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class FruitDeliverer : MonoBehaviour
 {
-    [SerializeField] private GameObject fruitPrefab;
-    [SerializeField] private Transform dropPoint;
+    [SerializeField] private GameObject fruitPrefab;    
     [SerializeField] private int poolSize = 5;
+
+    private const string FruitDropPoint = "FruitDropPoint";
 
     private Queue<GameObject> fruitsPool = new Queue<GameObject>();
 
     private bool isDeliverable = true;
 
+    private Transform dropPoint;
     private Button button;
 
     private void Awake()
     {
         button = GetComponent<Button>();
+        dropPoint = GameObject.FindGameObjectWithTag(FruitDropPoint).transform;
         button.onClick.AddListener(() => DropFruit());
         SpawnFruits();
 

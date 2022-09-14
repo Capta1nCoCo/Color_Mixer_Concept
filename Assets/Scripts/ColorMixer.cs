@@ -6,12 +6,10 @@ using UnityEngine;
 public class ColorMixer : MonoBehaviour
 {
     [SerializeField] private Material juiceMaterial;
-    [SerializeField] private Color[] referenceColors;
 
     private const string SideColor = "_SideColor";
     private const string TopColor = "_TopColor";
 
-    private int currentLevelIndex;
     private int dividerR;
     private int dividerG;
     private int dividerB;
@@ -22,26 +20,20 @@ public class ColorMixer : MonoBehaviour
 
     private bool isSingleTypeFruits;
 
+    private Color referenceColor = Color.white;
     private Color singleTypeFruitsColor = Color.white;
 
     private List<Fruit> fruitsToMix = new List<Fruit>();
     private List<Fruit> singleTypeFruits = new List<Fruit>();
 
+    private LevelData levelData;
+
     private void Awake()
     {
         isSingleTypeFruits = true;
+        levelData = LevelData.Instance;
+        GetLevelData();
         GameEvents.MixColors += OnMixColors;
-    }   
-
-    private void Start()
-    {
-        //TEST AREA
-        //TODO: currentLevelIndex and dividersRGB will be passed each level by GameController
-        currentLevelIndex = 1;
-        dividerR = 2;
-        dividerG = 3;
-        dividerB = 2;
-        AdjustJuiceColor();
     }
 
     private void OnDestroy()
@@ -52,6 +44,14 @@ public class ColorMixer : MonoBehaviour
     public void AddFruitToMix(Fruit fruitInTheJug)
     {
         fruitsToMix.Add(fruitInTheJug);
+    }
+
+    private void GetLevelData()
+    {
+        referenceColor = levelData.GetRefrenceColor;
+        dividerR = levelData.GetDividerR;
+        dividerG = levelData.GetDividerG;
+        dividerB = levelData.GetDividerB;
     }
 
     private void OnMixColors()
@@ -121,7 +121,7 @@ public class ColorMixer : MonoBehaviour
 
     private void AddFruitAsColor(Fruit fruit)
     {
-        var refColor = referenceColors[currentLevelIndex];
+        var refColor = referenceColor;
         var fruitPartOfR = refColor.r / dividerR;
         var fruitPartOfG = refColor.g / dividerG;
         var fruitPartOfB = refColor.b / dividerB;
@@ -147,7 +147,7 @@ public class ColorMixer : MonoBehaviour
 
     private void AdjustJuiceColor()
     {
-        Color temp = referenceColors[currentLevelIndex];
+        Color temp = referenceColor;
         temp.r = currentR;
         temp.g = currentG;
         if (dividerB > 0) { temp.b = currentB; }        
