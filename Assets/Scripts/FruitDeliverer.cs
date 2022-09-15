@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +8,13 @@ public class FruitDeliverer : MonoBehaviour
 {
     [SerializeField] private GameObject fruitPrefab;    
     [SerializeField] private int poolSize = 5;
-
-    private const string FruitDropPoint = "FruitDropPoint";
+    
+    private float delayInSeconds = 0.5f;
 
     private Queue<GameObject> fruitsPool = new Queue<GameObject>();
 
     private bool isDeliverable = true;
+    private bool isSpamProtected;
 
     private Transform dropPoint;
     private Button button;
@@ -22,7 +22,7 @@ public class FruitDeliverer : MonoBehaviour
     private void Awake()
     {
         button = GetComponent<Button>();
-        dropPoint = GameObject.FindGameObjectWithTag(FruitDropPoint).transform;
+        dropPoint = GameObject.FindGameObjectWithTag(Constants.FruitDropPoint).transform;
         button.onClick.AddListener(() => DropFruit());
         SpawnFruits();
 
@@ -38,9 +38,16 @@ public class FruitDeliverer : MonoBehaviour
 
     public void DropFruit()
     {
-        if (!isDeliverable) { return; }
-        var fruit = GetFruit();
-        fruit.transform.position = dropPoint.position;
+        if (isDeliverable)
+        {
+            if (!isSpamProtected)
+            {
+                var fruit = GetFruit();
+                fruit.transform.position = dropPoint.position;
+                GameEvents.OpenTheLit();
+                StartCoroutine(ProtectFromSpam());
+            }
+        }        
     }
 
     private GameObject GetFruit()
@@ -49,6 +56,13 @@ public class FruitDeliverer : MonoBehaviour
         fruit.SetActive(true);
         fruitsPool.Enqueue(fruit);
         return fruit;
+    }
+
+    private IEnumerator ProtectFromSpam()
+    {
+        isSpamProtected = true;
+        yield return new WaitForSeconds(delayInSeconds);
+        isSpamProtected = false;
     }
 
     private void SpawnFruits()

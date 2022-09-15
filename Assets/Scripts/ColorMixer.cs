@@ -1,14 +1,9 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ColorMixer : MonoBehaviour
 {
     [SerializeField] private Material juiceMaterial;
-
-    private const string SideColor = "_SideColor";
-    private const string TopColor = "_TopColor";
 
     private int dividerR;
     private int dividerG;
@@ -26,14 +21,15 @@ public class ColorMixer : MonoBehaviour
     private List<Fruit> fruitsToMix = new List<Fruit>();
     private List<Fruit> singleTypeFruits = new List<Fruit>();
 
-    private LevelData levelData;
-
     private void Awake()
     {
         isSingleTypeFruits = true;
-        levelData = LevelData.Instance;
-        GetLevelData();
         GameEvents.MixColors += OnMixColors;
+    }
+
+    private void Start()
+    {        
+        GetLevelData();
     }
 
     private void OnDestroy()
@@ -48,6 +44,7 @@ public class ColorMixer : MonoBehaviour
 
     private void GetLevelData()
     {
+        var levelData = LevelData.Instance;
         referenceColor = levelData.GetRefrenceColor;
         dividerR = levelData.GetDividerR;
         dividerG = levelData.GetDividerG;
@@ -56,8 +53,28 @@ public class ColorMixer : MonoBehaviour
 
     private void OnMixColors()
     {
-        MixFruitsColors();
-        
+        MixFruitColors();
+        ApplyFruitColorsToJuice();
+    }
+    
+    private void MixFruitColors()
+    {
+        foreach (Fruit fruit in fruitsToMix)
+        {
+            if (isSingleTypeFruits)
+            {
+                SortFruitsByType(fruit);
+            }
+            else
+            {
+                AddFruitAsColor(fruit);
+            }            
+        }
+        fruitsToMix.Clear();
+    }
+    
+    private void ApplyFruitColorsToJuice()
+    {
         if (isSingleTypeFruits)
         {
             ApplyColorToJuiceMaterial(singleTypeFruitsColor);
@@ -66,41 +83,25 @@ public class ColorMixer : MonoBehaviour
         {
             AdjustJuiceColor();
         }
-        
-        foreach (Fruit fruit in fruitsToMix)
-        {
-            print(fruit.GetFruitType);
-        }
     }
 
-    private void MixFruitsColors()
+    private void SortFruitsByType(Fruit fruit)
     {
-        foreach (Fruit fruit in fruitsToMix)
+        var firstItemIndex = 0;
+        if (singleTypeFruits.Count == firstItemIndex)
         {
-            if (isSingleTypeFruits)
-            {
-                var firstItemIndex = 0;
-                if (singleTypeFruits.Count == firstItemIndex)
-                {
-                    singleTypeFruits.Add(fruit);
-                    SetSingleTypeFruitsColor(fruit);
-                }
-                else if (fruit.GetFruitType != singleTypeFruits[firstItemIndex].GetFruitType)
-                {
-                    AddSingleTypeFruitsAsColors();
-                    AddFruitAsColor(fruit);                    
-                }
-                else
-                {
-                    singleTypeFruits.Add(fruit);
-                }
-            }
-            else
-            {
-                AddFruitAsColor(fruit);
-            }            
+            singleTypeFruits.Add(fruit);
+            SetSingleTypeFruitsColor(fruit);
         }
-        fruitsToMix.Clear();
+        else if (fruit.GetFruitType != singleTypeFruits[firstItemIndex].GetFruitType)
+        {
+            AddSingleTypeFruitsAsColors();
+            AddFruitAsColor(fruit);
+        }
+        else
+        {
+            singleTypeFruits.Add(fruit);
+        }
     }
 
     private void SetSingleTypeFruitsColor(Fruit fruit)
@@ -156,7 +157,7 @@ public class ColorMixer : MonoBehaviour
 
     private void ApplyColorToJuiceMaterial(Color color)
     {
-        juiceMaterial.SetColor(SideColor, color);
-        juiceMaterial.SetColor(TopColor, color);
+        juiceMaterial.SetColor(Constants.SideColor, color);
+        juiceMaterial.SetColor(Constants.TopColor, color);
     }
 }

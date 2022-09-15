@@ -1,28 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Blender : MonoBehaviour
 {
     [SerializeField] private GameObject juiceInTheJug;
     [SerializeField] private Material juiceMaterial;
-
-    private const string Fill = "_Fill";
-    private const float fillAmountPerFruit = 0.15f;
+    [SerializeField] [Range(0f, 1f)] private float fillAmountPerFruit = 0.15f;
 
     private float currentFillAmount;
 
+    private Animator animator;
+
     private void Awake()
     {
+        animator = GetComponent<Animator>();
         juiceInTheJug.SetActive(true);
         FillTheJugWithJuice();
+        GameEvents.OpenTheLit += OnOpenTheLit;
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.OpenTheLit -= OnOpenTheLit;
     }
 
     public void Mix()
     {        
-        print("Mixing Fruits...");
         GameEvents.JugIsEmpty();
         GameEvents.MixColors();
+        animator.SetTrigger(Constants.Mix);
+    }
+
+    private void OnOpenTheLit()
+    {
+        animator.SetTrigger(Constants.Open);
     }
 
     public void AddToFillAmount(int items)
@@ -30,11 +41,10 @@ public class Blender : MonoBehaviour
         currentFillAmount += fillAmountPerFruit * items;
         currentFillAmount = Mathf.Clamp(currentFillAmount, 0f, 1f);
         FillTheJugWithJuice();
-        print("Current Fill Amount = " + currentFillAmount);
     }
 
     private void FillTheJugWithJuice()
     {
-        juiceMaterial.SetFloat(Fill, currentFillAmount);
+        juiceMaterial.SetFloat(Constants.Fill, currentFillAmount);
     }
 }

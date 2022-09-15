@@ -19,11 +19,11 @@ public class Wobble : MonoBehaviour
     private Vector3 lastRot;
     private Vector3 angularVelocity;
 
-    private bool isWobbleble;
+    [SerializeField] private bool isWobbleble;
 
     private void Awake()
     {
-        rend = GetComponent<Renderer>();
+        rend = GetComponent<Renderer>();        
     }
 
     private void Update()

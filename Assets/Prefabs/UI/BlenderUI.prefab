@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 4657599669840886}
   - component: {fileID: 33872579904509522}
   - component: {fileID: 23951655326940150}
+  - component: {fileID: 3038116801646291782}
   - component: {fileID: 4696797512852982404}
   - component: {fileID: 6977152456957647746}
   m_Layer: 5
@@ -172,6 +173,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &3038116801646291782
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707807610190462}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5755c2c265d845841af7f5e760c66684, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &4696797512852982404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   juiceInTheJug: {fileID: 2734126589386076268}
   juiceMaterial: {fileID: 2100000, guid: 4bdef9655adb9ce48924bbc461d4c49e, type: 2}
+  fillAmountPerFruit: 0.15
 --- !u!114 &6977152456957647746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,18 +221,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   juiceMaterial: {fileID: 2100000, guid: 4bdef9655adb9ce48924bbc461d4c49e, type: 2}
-  referenceColors:
-  - {r: 0.74509805, g: 1, b: 0.34117648, a: 1}
-  - {r: 0.9490196, g: 0.7176471, b: 0.13725491, a: 1}
-  - {r: 0.43529412, g: 0.078431375, b: 0.078431375, a: 1}
-  fruitColors:
-  - {r: 0.61960787, g: 0.7490196, b: 0.3372549, a: 1}
-  - {r: 1, g: 0.8627451, b: 0, a: 1}
-  - {r: 0.9490196, g: 0.36078432, b: 0.019607844, a: 1}
-  - {r: 0.69803923, g: 0.18431373, b: 0, a: 1}
-  - {r: 0.9490196, g: 0.1882353, b: 0.019607844, a: 1}
-  - {r: 0.5019608, g: 0.6509804, b: 0.1764706, a: 1}
-  - {r: 0.5529412, g: 0.36862746, b: 0.9490196, a: 1}
 --- !u!1 &1949344047188952
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4380901099284090
 Transform:
   m_ObjectHideFlags: 0
@@ -597,7 +607,7 @@ GameObject:
   - component: {fileID: 1685648731869793367}
   - component: {fileID: 2196085011657069021}
   - component: {fileID: 8805505248475436603}
-  - component: {fileID: 7308891772021246978}
+  - component: {fileID: 2229985741242870083}
   m_Layer: 5
   m_Name: JugLiquid
   m_TagString: Untagged
@@ -612,14 +622,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2734126589386076268}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.00000029135214, y: 0.1665979, z: 0.00000010023421}
   m_LocalScale: {x: 0.94, y: 0.94, z: 0.94}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4657599669840886}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &2196085011657069021
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -670,7 +680,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7308891772021246978
+--- !u!114 &2229985741242870083
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

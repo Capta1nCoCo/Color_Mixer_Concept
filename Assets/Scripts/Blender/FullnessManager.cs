@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,13 +27,11 @@ public class FullnessManager : MonoBehaviour
     {
         if (fruitsInTheJug.Contains(other.gameObject)) { return; }
 
-        fruitsInTheJug.Add(other.gameObject);      
-        print("Fruit Delivered, fullness: " + fruitsInTheJug.Count + "/" + blenderCapacity);
+        fruitsInTheJug.Add(other.gameObject);
         
         if (fruitsInTheJug.Count == blenderCapacity)
         {
             GameEvents.JugIsFull();
-            print("Jar is full!");
         }
     }
 
@@ -48,8 +44,6 @@ public class FullnessManager : MonoBehaviour
             fruitObj.SetActive(false);           
         }
         blender.AddToFillAmount(fruitsInTheJug.Count);
-        fruitsInTheJug.Clear();
-
-        print("Jar is empty!");      
+        fruitsInTheJug.Clear();      
     }
 }
