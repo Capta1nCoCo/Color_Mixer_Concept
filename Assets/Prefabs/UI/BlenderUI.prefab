@@ -607,7 +607,6 @@ GameObject:
   - component: {fileID: 1685648731869793367}
   - component: {fileID: 2196085011657069021}
   - component: {fileID: 8805505248475436603}
-  - component: {fileID: 2229985741242870083}
   m_Layer: 5
   m_Name: JugLiquid
   m_TagString: Untagged
@@ -680,21 +679,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2229985741242870083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2734126589386076268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 998ec4f59869a5a468bda32ac0a8e097, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxWobble: 0.03
-  WobbleSpeed: 1
-  Recovery: 1
 --- !u!1 &3257057614327749445
 GameObject:
   m_ObjectHideFlags: 0

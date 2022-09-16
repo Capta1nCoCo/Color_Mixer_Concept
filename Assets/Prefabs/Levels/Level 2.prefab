@@ -874,6 +874,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 742e88801e9ea2d45b53b0710d533f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  referenceJuiceMaterial: {fileID: 2100000, guid: 92f465e0b91729f439b9b12028c0ca9b,
+    type: 2}
   refrenceColor: {r: 0.9490196, g: 0.7176471, b: 0.13725491, a: 1}
   dividerR: 3
   dividerG: 2

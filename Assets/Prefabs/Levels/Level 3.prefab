@@ -52,6 +52,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 742e88801e9ea2d45b53b0710d533f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  referenceJuiceMaterial: {fileID: 2100000, guid: 92f465e0b91729f439b9b12028c0ca9b,
+    type: 2}
   refrenceColor: {r: 0.43529412, g: 0.078431375, b: 0.078431375, a: 1}
   dividerR: 4
   dividerG: 1

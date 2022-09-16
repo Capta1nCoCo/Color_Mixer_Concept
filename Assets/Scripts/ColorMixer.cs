@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,8 +56,9 @@ public class ColorMixer : MonoBehaviour
     {
         MixFruitColors();
         ApplyFruitColorsToJuice();
+        CompareJuiceWithReference();
     }
-    
+
     private void MixFruitColors()
     {
         foreach (Fruit fruit in fruitsToMix)
@@ -159,5 +161,15 @@ public class ColorMixer : MonoBehaviour
     {
         juiceMaterial.SetColor(Constants.SideColor, color);
         juiceMaterial.SetColor(Constants.TopColor, color);
+    }
+
+    private void CompareJuiceWithReference()
+    {
+        var refColor = referenceColor;
+        var refColorValue = refColor.r + refColor.g + refColor.b;
+        var tempCurrentB = refColor.b;
+        if (dividerB > 0) { tempCurrentB = currentB; }
+        var currentColorValue = currentR + currentG + tempCurrentB;
+        GameEvents.ChangeCurrentComplinceValue((currentColorValue / refColorValue).ToString("0%"));
     }
 }

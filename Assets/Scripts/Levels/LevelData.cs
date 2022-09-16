@@ -4,6 +4,7 @@ public class LevelData : MonoBehaviour
 {
     public static LevelData Instance;
 
+    [SerializeField] private Material referenceJuiceMaterial;
     [SerializeField] private Color refrenceColor = Color.white;
     [SerializeField] private int dividerR;
     [SerializeField] private int dividerG;
@@ -18,5 +19,8 @@ public class LevelData : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        referenceJuiceMaterial.SetFloat(Constants.Fill, 1f);
+        referenceJuiceMaterial.SetColor(Constants.SideColor, refrenceColor);
+        referenceJuiceMaterial.SetColor(Constants.TopColor, refrenceColor);
     }
 }
